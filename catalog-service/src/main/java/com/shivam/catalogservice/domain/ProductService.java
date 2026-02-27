@@ -1,0 +1,48 @@
+package com.shivam.catalogservice.domain;
+import com.shivam.catalogservice.ApplicationProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public class ProductService {
+
+    ProductRepository productRepository ;
+    ApplicationProperties properties ;
+
+    ProductService(ProductRepository productRepository , ApplicationProperties properties){
+        this.productRepository = productRepository ;
+        this.properties = properties ;
+    }
+/*
+        In spring data jpa , page no starts from zero ,
+        but user might need it from 1
+ */
+    public PageResult<Product> getProducts(int pageNo){
+        Sort sort = Sort.by("name").ascending();
+        pageNo = pageNo <= 1 ? 0 : pageNo - 1 ;
+        /*
+            Pageable pageable = PageRequest.of(pageNo , 10 , sort); avoid hard coded values
+            make an record ApplicationProperties and set value through application.properties
+         */
+
+        Pageable pageable = PageRequest.of(pageNo , properties.page() , sort);
+        Page<Product> productsPage = productRepository.findAll(pageable)
+                .map(ProductMapper::toProduct);
+
+        return new PageResult<>(
+                productsPage.getContent(),
+                productsPage.getTotalElements(),
+                productsPage.getNumber() + 1,
+                productsPage.getTotalPages(),
+                productsPage.isFirst(),
+                productsPage.isLast(),
+                productsPage.hasNext(),
+                productsPage.hasPrevious()
+        );
+    }
+}
