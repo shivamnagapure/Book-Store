@@ -1,7 +1,6 @@
 package com.shivam.catalogservice;
 
 import jakarta.validation.constraints.Min;
-import lombok.Builder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 

@@ -2,11 +2,10 @@ package com.shivam.catalogservice.web.controllers;
 
 import com.shivam.catalogservice.domain.PageResult;
 import com.shivam.catalogservice.domain.Product;
+import com.shivam.catalogservice.domain.ProductNotFoundException;
 import com.shivam.catalogservice.domain.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/products")
@@ -21,5 +20,12 @@ class ProductController {
     @GetMapping
     PageResult<Product> getProducts(@RequestParam (name = "page" , defaultValue = "1") int page){
         return productService.getProducts(page) ;
+    }
+
+    @GetMapping("/{code}")
+    ResponseEntity<Product> getProductByCode(@PathVariable String code){
+        return productService.getProductByCode(code)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new ProductNotFoundException("Product Not Found With " + code));
     }
 }
