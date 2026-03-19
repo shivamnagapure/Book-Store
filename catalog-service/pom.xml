@@ -28,6 +28,8 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<!--used docker image custom name -->
+		<dockerImageName>shivamnagapure/bookstore-${project.artifactId}</dockerImageName>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -159,6 +161,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<name>${dockerImageName}</name>
+						<!-- By default, it builds image for ARM architecture(Window , Linux) for Mac need to use builder-->
+					</image>
+				</configuration>
                 <executions>
                     <execution>
                         <goals>

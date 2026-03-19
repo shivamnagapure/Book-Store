@@ -4,9 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-
 import java.math.BigDecimal;
+import lombok.*;
 
 @Getter
 @Setter
@@ -17,36 +16,37 @@ import java.math.BigDecimal;
 public class ProductEntity {
 
     @Id
-    @SequenceGenerator(name = "product_id_generator" , sequenceName = "product_id_seq") // Only sequenceName must match your database sequence
+    @SequenceGenerator(
+            name = "product_id_generator",
+            sequenceName = "product_id_seq") // Only sequenceName must match your database sequence
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_generator")
-    private Long id ;
+    private Long id;
 
-    @Column(nullable = false , unique = true)
+    @Column(nullable = false, unique = true)
     @NotEmpty(message = "Product Code is Required")
-    private String code ;
+    private String code;
 
     /*
-        @NOTNULL
-        null -> not allowed
-        "" -> allowed
-        " " -> allowed
-     */
+       @NOTNULL
+       null -> not allowed
+       "" -> allowed
+       " " -> allowed
+    */
     @Column(nullable = false)
     @NotEmpty(message = "Product Name is Required")
-    private String name ;
+    private String name;
 
-    private  String description ;
+    private String description;
 
-    private String imageUrl ;
+    private String imageUrl;
 
     /* @NOTEMPTY
-        ❌ null → NOT allowed
-        ❌ "" → NOT allowed
-        ✅ " " → allowed
-     */
+       ❌ null → NOT allowed
+       ❌ "" → NOT allowed
+       ✅ " " → allowed
+    */
     @NotNull(message = "Product Price is Required") // NOT null , NOT empty (length > 0)
     @DecimalMin("0.1")
     @Column(nullable = false)
-    private BigDecimal price ;
-
+    private BigDecimal price;
 }
