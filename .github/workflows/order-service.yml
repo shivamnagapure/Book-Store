@@ -3,7 +3,7 @@ name: Order Service
 on:
   push:
     paths:
-      - main
+      - order-service/**
     branches:
       - '**'
 
@@ -30,11 +30,8 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Make mvnw executable
-        run: chmod +x mvnw
-
       - name: Build with Maven
-        run: ./mvnw -ntp verify
+        run: mvn -pl order-service -ntp verify
 
       - name: Login to Docker
         uses: docker/login-action@v3
@@ -44,6 +41,6 @@ jobs:
 
       - name: Build and Publish Docker Image
         run: |
-          ./mvnw spring-boot:build-image -DskipTests
+          mvn spring-boot:build-image -DskipTests
           echo "Pushing the image $DOCKER_IMAGE_NAME to Docker Hub ... "
           docker push $DOCKER_IMAGE_NAME
