@@ -2,31 +2,30 @@ package com.shiv.bookstore.orders.config;
 
 import com.shiv.bookstore.orders.ApplicationProperties;
 import org.springframework.amqp.core.*;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
 
-    private final ApplicationProperties properties ;
+    private final ApplicationProperties properties;
 
-    RabbitMQConfig(ApplicationProperties properties){
-        this.properties = properties ;
+    RabbitMQConfig(ApplicationProperties properties) {
+        this.properties = properties;
     }
 
     @Bean
-    DirectExchange exchange(){
+    DirectExchange exchange() {
         return new DirectExchange(properties.orderEventsExchange());
     }
 
     @Bean
-    Queue newOrdersQueue(){
+    Queue newOrdersQueue() {
         return QueueBuilder.durable(properties.newOrdersQueue()).build();
     }
 
     @Bean
-    Binding newOrdersQueueBinding(){
+    Binding newOrdersQueueBinding() {
         return BindingBuilder.bind(newOrdersQueue())
                 .to(exchange())
                 .with(properties.newOrdersQueue()); // routing key (can be anything)
@@ -61,5 +60,4 @@ public class RabbitMQConfig {
     Binding errorOrdersQueueBinding() {
         return BindingBuilder.bind(errorOrdersQueue()).to(exchange()).with(properties.errorOrdersQueue());
     }
-
 }
