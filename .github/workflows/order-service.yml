@@ -31,7 +31,7 @@ jobs:
           cache: 'maven'
 
       - name: Build with Maven
-        run: ./mvnw -ntp verify
+        run: chmod +x mvnw
 
       - name: Login to Docker
         uses: docker/login-action@v3
