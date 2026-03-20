@@ -9,7 +9,6 @@ public class RabbitMQListener {
     @RabbitListener(queues = "${orders. new-orders-queue}")
     public void handleNewOrder(MyPayload payload) {
         System.out.println("New Order: " + payload.content());
-
     }
 
     @RabbitListener(queues = "${orders. delivered-orders-queue}")

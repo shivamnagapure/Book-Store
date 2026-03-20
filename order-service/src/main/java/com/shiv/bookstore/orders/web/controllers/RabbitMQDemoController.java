@@ -8,24 +8,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RabbitMQDemoController {
-    private final RabbitTemplate rabbitTemplate ;
-    private final ApplicationProperties properties ;
+    private final RabbitTemplate rabbitTemplate;
+    private final ApplicationProperties properties;
 
-    RabbitMQDemoController(RabbitTemplate rabbitTemplate , ApplicationProperties properties){
+    RabbitMQDemoController(RabbitTemplate rabbitTemplate, ApplicationProperties properties) {
         this.properties = properties;
-        this.rabbitTemplate = rabbitTemplate ;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     @PostMapping("/send")
-    public void sendMessage(@RequestBody MyMessage message){
-        rabbitTemplate.convertAndSend(
-                properties.orderEventsExchange(),
-                message.routingKey(),
-                message.payload()
-        );
+    public void sendMessage(@RequestBody MyMessage message) {
+        rabbitTemplate.convertAndSend(properties.orderEventsExchange(), message.routingKey(), message.payload());
     }
 }
 
-record MyMessage(String routingKey , MyPayload payload){}
+record MyMessage(String routingKey, MyPayload payload) {}
 
-record MyPayload(String content){}
+record MyPayload(String content) {}

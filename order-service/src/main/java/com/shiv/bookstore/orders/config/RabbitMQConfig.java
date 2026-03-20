@@ -1,11 +1,9 @@
 package com.shiv.bookstore.orders.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import com.shiv.bookstore.orders.ApplicationProperties;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-
 import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
@@ -66,7 +64,6 @@ public class RabbitMQConfig {
     Binding errorOrdersQueueBinding() {
         return BindingBuilder.bind(errorOrdersQueue()).to(exchange()).with(properties.errorOrdersQueue());
     }
-
 
     // RabbitTemplate with JSON converter
     @Bean
