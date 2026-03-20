@@ -12,7 +12,6 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     env:
-      working-directory: ./order-service
       DOCKER_IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME}}/bookstore-order-service
     defaults:
       #sets a default working directory for all run commands in this job ,  means all run commands run inside this directory
