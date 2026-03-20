@@ -2,10 +2,8 @@ name: Order Service
 
 on:
   push:
-    paths:
-      - order-service/**
     branches:
-      - '**'
+      - main
 
 jobs:
   build:
