@@ -1,7 +1,13 @@
 package com.shiv.bookstore.orders.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import com.shiv.bookstore.orders.ApplicationProperties;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -59,5 +65,20 @@ public class RabbitMQConfig {
     @Bean
     Binding errorOrdersQueueBinding() {
         return BindingBuilder.bind(errorOrdersQueue()).to(exchange()).with(properties.errorOrdersQueue());
+    }
+
+
+    // RabbitTemplate with JSON converter
+    @Bean
+    public MessageConverter jsonMessageConverter() {
+        // This is the new, non-deprecated converter for Jackson 3
+        return new JacksonJsonMessageConverter();
+    }
+
+    @Bean
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, MessageConverter jsonMessageConverter) {
+        RabbitTemplate template = new RabbitTemplate(connectionFactory);
+        template.setMessageConverter(jsonMessageConverter);
+        return template;
     }
 }

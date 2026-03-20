@@ -46,6 +46,8 @@ services:
     image: rabbitmq:3.12.11-management
     container_name: bookstore-rabbitmq
     environment:
+      - RABBITMQ_HOST=bookstore-rabbitmq
+      - RABBITMQ_PORT=5672
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
     ports:
