@@ -176,6 +176,11 @@
 							<groupId>org.springframework.boot</groupId>
 							<artifactId>spring-boot-configuration-processor</artifactId>
 						</path>
+						<!-- lombok plugin path -->
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</path>
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
