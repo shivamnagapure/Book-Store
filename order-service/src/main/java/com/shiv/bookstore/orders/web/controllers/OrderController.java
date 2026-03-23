@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/orders")
 public class OrderController {
 
-    private final OrderService orderService ;
-    private final SecurityService securityService ;
+    private final OrderService orderService;
+    private final SecurityService securityService;
 
     OrderController(OrderService orderService, SecurityService securityService) {
         this.orderService = orderService;
@@ -22,8 +22,8 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    CreateOrderResponse createOrder(@Valid @RequestBody CreateOrderRequest request){
+    CreateOrderResponse createOrder(@Valid @RequestBody CreateOrderRequest request) {
         String userName = securityService.getLoginUserName();
-        return orderService.createOrder(userName , request);
+        return orderService.createOrder(userName, request);
     }
 }

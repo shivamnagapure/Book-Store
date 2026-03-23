@@ -3,14 +3,13 @@ package com.shiv.bookstore.orders.domain;
 import com.shiv.bookstore.orders.domain.models.CreateOrderRequest;
 import com.shiv.bookstore.orders.domain.models.OrderItem;
 import com.shiv.bookstore.orders.domain.models.OrderStatus;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 class OrderMapper {
 
-    static OrderEntity convertToEntity(CreateOrderRequest request){
+    static OrderEntity convertToEntity(CreateOrderRequest request) {
         OrderEntity newOrder = OrderEntity.builder()
                 .orderNumber(UUID.randomUUID().toString())
                 .status(OrderStatus.NEW)
@@ -20,7 +19,7 @@ class OrderMapper {
 
         Set<OrderItemEntity> orderItems = new HashSet<>();
 
-        for(OrderItem item : request.items()){
+        for (OrderItem item : request.items()) {
             OrderItemEntity orderItem = OrderItemEntity.builder()
                     .code(item.code())
                     .name(item.name())
@@ -33,7 +32,6 @@ class OrderMapper {
         }
 
         newOrder.setItems(orderItems);
-        return newOrder ;
-
+        return newOrder;
     }
 }

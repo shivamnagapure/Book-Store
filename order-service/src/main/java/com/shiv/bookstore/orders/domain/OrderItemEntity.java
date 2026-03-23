@@ -1,9 +1,8 @@
 package com.shiv.bookstore.orders.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.math.BigDecimal;
+import lombok.*;
 
 @Data
 @Entity
@@ -31,5 +30,5 @@ public class OrderItemEntity {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private OrderEntity order ;
+    private OrderEntity order;
 }
