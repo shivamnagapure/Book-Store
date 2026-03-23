@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import lombok.*;
 
-@Getter
-@Setter
+
 @Entity
 @Builder
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "order_items")
