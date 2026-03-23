@@ -19,6 +19,7 @@ class OrderMapper {
 
         Set<OrderItemEntity> orderItems = new HashSet<>();
 
+
         for (OrderItem item : request.items()) {
             OrderItemEntity orderItem = OrderItemEntity.builder()
                     .code(item.code())
