@@ -1,16 +1,17 @@
 package com.shiv.bookstore.orders.domain;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "order_items")
-class OrderItemEntity {
+public class OrderItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_item_id_generator")

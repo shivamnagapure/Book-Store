@@ -4,15 +4,17 @@ import com.shiv.bookstore.orders.domain.models.Address;
 import com.shiv.bookstore.orders.domain.models.Customer;
 import com.shiv.bookstore.orders.domain.models.OrderStatus;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "orders")
 public class OrderEntity {
 

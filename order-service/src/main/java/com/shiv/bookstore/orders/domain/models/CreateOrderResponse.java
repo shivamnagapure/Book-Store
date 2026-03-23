@@ -1,4 +1,6 @@
 package com.shiv.bookstore.orders.domain.models;
 
-public record CreateOrderResponse() {
+public record  CreateOrderResponse(
+        String orderNumber
+) {
 }

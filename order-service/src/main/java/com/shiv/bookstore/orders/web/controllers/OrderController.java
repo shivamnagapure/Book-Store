@@ -5,9 +5,8 @@ import com.shiv.bookstore.orders.domain.SecurityService;
 import com.shiv.bookstore.orders.domain.models.CreateOrderRequest;
 import com.shiv.bookstore.orders.domain.models.CreateOrderResponse;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -21,8 +20,10 @@ public class OrderController {
         this.securityService = securityService;
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     CreateOrderResponse createOrder(@Valid @RequestBody CreateOrderRequest request){
         String userName = securityService.getLoginUserName();
-        return orderService.findOrders(userName);
+        return orderService.createOrder(userName , request);
     }
 }
