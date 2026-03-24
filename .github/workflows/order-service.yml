@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'order-service/**'
 
 jobs:
   build-and-push:

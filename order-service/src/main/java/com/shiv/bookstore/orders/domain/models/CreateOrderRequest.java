@@ -1,9 +1,7 @@
 package com.shiv.bookstore.orders.domain.models;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-
 import java.util.Set;
 
 public record CreateOrderRequest(

@@ -9,9 +9,7 @@ import org.springframework.web.client.RestClient;
 public class CatalogServiceClientConfig {
 
     @Bean
-    RestClient restClient (ApplicationProperties properties){
-        return RestClient.builder()
-                .baseUrl(properties.catalogServiceUrl())
-                .build();
+    RestClient restClient(ApplicationProperties properties) {
+        return RestClient.builder().baseUrl(properties.catalogServiceUrl()).build();
     }
 }
