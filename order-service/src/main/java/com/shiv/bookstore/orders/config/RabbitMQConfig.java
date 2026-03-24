@@ -1,5 +1,6 @@
 package com.shiv.bookstore.orders.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shiv.bookstore.orders.ApplicationProperties;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -77,5 +78,10 @@ public class RabbitMQConfig {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(jsonMessageConverter);
         return template;
+    }
+
+    @Bean
+    public ObjectMapper objectMapper(){
+        return new ObjectMapper();
     }
 }

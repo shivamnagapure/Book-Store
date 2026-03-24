@@ -1,7 +1,12 @@
 //Todo 1. check createOrder Endpoint , and error Conditions
 //Todo 2. Use MapStruct for Dto to entity conversion and vice versa
 //Todo 3. LinkedIn Post for Global Exception Handler with createOrder API with success and failure scenarios
-//Todo 4 . UnderStand Resilience Patterns
+//Todo 4. UnderStand Resilience Patterns
+//Todo 5.  timeout (or) timeLimiter , retry , circuitBreaker
+           -> Resilience4j TimeLimiter is mainly used for asynchronous calls and
+           is not typically required for synchronous RestClient communication.
+           While using RestClient, timeout should be configured at the HTTP client level
+           using connect and read timeouts
 
 Task : To Validate item details , we need item details from catalog-service4.
 Solution : using RestClient , order-service communicate with catalog-service
@@ -16,3 +21,18 @@ Solution : using RestClient , order-service communicate with catalog-service
             2. WebClient
             3. RestTemplate -> synchronous client with template methods api
             4. HTTP Interface
+
+//Todo 6. publish events to RabbitMQ
+
+Problem : Consumer gets event but DB has no data etc .
+Solution : OutBox Pattern (Don’t publish events directly — store them first, then publish reliably.)
+
+-> Since database and message queue are separate systems ,we cannot have a single transaction across them .
+So we use the Transactional Outbox Pattern, where events are stored in the database and later published using a scheduler,
+ensuring reliability and consistency.
+
+//Todo 6.1. Create order_events table , entity , repository and service
+//Todo 6.2. Create Order Event Models
+//Todo 6.3. Implement Order event Mapper
+//Todo 6.4. Store Order events to order_events table
+//Todo 6.5. Create a Scheduled Job to Publish order event to RabbitMQ
