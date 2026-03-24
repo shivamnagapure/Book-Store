@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderValidator orderValidator;
 
-    OrderService(OrderRepository orderRepository) {
+    OrderService(OrderRepository orderRepository , OrderValidator orderValidator) {
         this.orderRepository = orderRepository;
+        this.orderValidator = orderValidator ;
     }
 
     //    public String findOrders(String userName) {
@@ -20,6 +22,7 @@ public class OrderService {
     //    }
 
     public CreateOrderResponse createOrder(String userName, CreateOrderRequest request) {
+        orderValidator.validate(request); //validating products
         OrderEntity newOrder = OrderMapper.convertToEntity(request);
         newOrder.setUserName(userName);
         OrderEntity saveOrder = this.orderRepository.save(newOrder);

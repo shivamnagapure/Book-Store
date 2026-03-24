@@ -20,10 +20,17 @@ public class OrderController {
         this.securityService = securityService;
     }
 
+    //Validating CreateOrder request by @Valid annotating
+    //It ensures that all constraints defined in the DTO are validated before the request is processed.
+    //f validation fails, Spring throws a MethodArgumentNotValidException, preventing invalid data from reaching the business logic.
+    // It also supports cascading validation for nested objects.
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     CreateOrderResponse createOrder(@Valid @RequestBody CreateOrderRequest request) {
         String userName = securityService.getLoginUserName();
         return orderService.createOrder(userName, request);
     }
+
+
 }

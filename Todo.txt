@@ -1,2 +1,18 @@
 //Todo 1. check createOrder Endpoint , and error Conditions
 //Todo 2. Use MapStruct for Dto to entity conversion and vice versa
+//Todo 3. LinkedIn Post for Global Exception Handler with createOrder API with success and failure scenarios
+//Todo 4 . UnderStand Resilience Patterns
+
+Task : To Validate item details , we need item details from catalog-service4.
+Solution : using RestClient , order-service communicate with catalog-service
+           Step 1. Configure baseUrl of catalog service in order-service application properties
+           Step 2. Configure RestClient as a Bean  with baseUrl
+           Step 3. Define Method which make Api call using RestClient and get Response(JSON)
+           Step 4. Do Items Validation before converting it to OrderEntity
+           Step 5. Handle failure cases with GlobalException Handler
+
+1. Spring FrameWork provides 4 ways to communicate with REST endpoints
+            1. RestClient -> synchronous client with fluent api
+            2. WebClient
+            3. RestTemplate -> synchronous client with template methods api
+            4. HTTP Interface

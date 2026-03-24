@@ -48,7 +48,7 @@ public class OrderEntity {
                 @AttributeOverride(name = "city", column = @Column(name = "delivery_address_city")),
                 @AttributeOverride(name = "state", column = @Column(name = "delivery_address_state")),
                 @AttributeOverride(name = "country", column = @Column(name = "delivery_address_country")),
-                @AttributeOverride(name = "zipcode", column = @Column(name = "delivery_address_zipcode"))
+                @AttributeOverride(name = "zipCode", column = @Column(name = "delivery_address_zip_code"))
             })
     private Address deliveryAddress;
 

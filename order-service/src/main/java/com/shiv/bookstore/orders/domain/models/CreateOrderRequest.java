@@ -2,10 +2,12 @@ package com.shiv.bookstore.orders.domain.models;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.Set;
 
 public record CreateOrderRequest(
-        @Valid @NotBlank() Set<OrderItem> items, @Valid Customer customer, @Valid Address deliveryAddress) {}
+        @Valid @NotEmpty() Set<OrderItem> items, @Valid Customer customer, @Valid Address deliveryAddress) {}
 
 // @Valid is used for nested object validation. In CreateOrderRequest, we use it on Customer because it’s a nested
 // object.
