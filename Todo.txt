@@ -36,3 +36,11 @@ ensuring reliability and consistency.
 //Todo 6.3. Implement Order event Mapper
 //Todo 6.4. Store Order events to order_events table
 //Todo 6.5. Create a Scheduled Job to Publish order event to RabbitMQ
+
+//Todo 6.6 Whether NEW CREATED event is deliverable or canceled we have to updates status in order table
+            and publish this event to OrderEvent Table , for this we required new job scheduler
+
+// For Consuming Error Events there should be listener (implement it)
+
+//Todo 7 Implement Get Orders and Get Order by OrderNumber
+//Todo 7.1 Get Orders Api

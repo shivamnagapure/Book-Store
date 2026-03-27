@@ -1,12 +1,17 @@
 package com.shiv.bookstore.orders.web.controllers;
 
+import com.shiv.bookstore.orders.domain.OrderNotFoundException;
 import com.shiv.bookstore.orders.domain.OrderService;
 import com.shiv.bookstore.orders.domain.SecurityService;
 import com.shiv.bookstore.orders.domain.models.CreateOrderRequest;
 import com.shiv.bookstore.orders.domain.models.CreateOrderResponse;
+import com.shiv.bookstore.orders.domain.models.OrderDTO;
+import com.shiv.bookstore.orders.domain.models.OrderSummary;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -31,5 +36,18 @@ public class OrderController {
     CreateOrderResponse createOrder(@Valid @RequestBody CreateOrderRequest request) {
         String userName = securityService.getLoginUserName();
         return orderService.createOrder(userName, request);
+    }
+
+    @GetMapping
+    List<OrderSummary> getOrders(){
+        String userName = securityService.getLoginUserName();
+        return orderService.findOrders(userName) ;
+    }
+
+    @GetMapping("/{orderNumber}")
+    OrderDTO getOrder(@PathVariable String orderNumber){
+        String userName = securityService.getLoginUserName();
+        return orderService.findUserOrder(userName , orderNumber)
+                .orElseThrow(() -> new OrderNotFoundException(orderNumber));
     }
 }

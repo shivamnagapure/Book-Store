@@ -1,11 +1,13 @@
 package com.shiv.bookstore.orders.domain;
 
 import com.shiv.bookstore.orders.domain.models.CreateOrderRequest;
+import com.shiv.bookstore.orders.domain.models.OrderDTO;
 import com.shiv.bookstore.orders.domain.models.OrderItem;
 import com.shiv.bookstore.orders.domain.models.OrderStatus;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 class OrderMapper {
 
@@ -34,4 +36,25 @@ class OrderMapper {
         newOrder.setItems(orderItems);
         return newOrder;
     }
+
+    static OrderDTO convertToDTO(OrderEntity order){
+        Set<OrderItem> orderItems = order.getItems().stream()
+                .map(item -> new OrderItem(item.getCode(), item.getName(), item.getPrice() , item.getQuantity()))
+                .collect(Collectors.toSet());
+        return OrderDTO.builder()
+                .orderNumber(order.getOrderNumber())
+                .deliveryAddress(order.getDeliveryAddress())
+                .items(orderItems)
+                .status(order.getStatus())
+                .comments(order.getComments())
+                .customer(order.getCustomer())
+                .createdAt(order.getCreatedAt())
+                .build();
+    }
+//
+//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+//    public BigDecimal getTotalAmount() {
+//        return items.stream() Stream<Orderltem>
+//.map(item -> item.price().multiply(BigDecimal. value0f(item.quantity()))
+//                .reduce (BigDecimal.ZERO, BigDecimal :: add);
 }

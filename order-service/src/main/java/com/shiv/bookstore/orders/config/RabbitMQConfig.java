@@ -81,7 +81,13 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public ObjectMapper objectMapper(){
-        return new ObjectMapper();
+    public ObjectMapper objectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+
+        // Jackson 3 has different defaults than Jackson 2
+        // Configure as needed
+        mapper.findAndRegisterModules(); // Registers JavaTimeModule, etc.
+
+        return mapper;
     }
 }
