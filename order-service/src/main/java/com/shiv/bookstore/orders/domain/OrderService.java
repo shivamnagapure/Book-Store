@@ -4,13 +4,10 @@ import com.shiv.bookstore.orders.domain.models.*;
 import com.shiv.bookstore.orders.jobs.OrderProcessingJob;
 import java.util.List;
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @Transactional
@@ -81,20 +78,20 @@ public class OrderService {
     }
 
     /*
-        BAD PRACTISE : for getting orderNumber and orderStatus , we are loading All entity details
+       BAD PRACTISE : for getting orderNumber and orderStatus , we are loading All entity details
 
-        orderRepository.findByUserName(userName).stream()
-                .map(order -> new OrderSummary(order.getOrderNumber() , order.getStatus()))
-                .toList();
-     */
+       orderRepository.findByUserName(userName).stream()
+               .map(order -> new OrderSummary(order.getOrderNumber() , order.getStatus()))
+               .toList();
+    */
 
     public List<OrderSummary> findOrders(String userName) {
         return orderRepository.findByUserName(userName);
     }
 
-
     public Optional<OrderDTO> findUserOrder(String userName, String orderNumber) {
-        return orderRepository.findByUserNameAndOrderNumber(userName , orderNumber)
+        return orderRepository
+                .findByUserNameAndOrderNumber(userName, orderNumber)
                 .map(OrderMapper::convertToDTO);
     }
 }

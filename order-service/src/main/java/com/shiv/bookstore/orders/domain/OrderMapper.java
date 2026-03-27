@@ -37,9 +37,9 @@ class OrderMapper {
         return newOrder;
     }
 
-    static OrderDTO convertToDTO(OrderEntity order){
+    static OrderDTO convertToDTO(OrderEntity order) {
         Set<OrderItem> orderItems = order.getItems().stream()
-                .map(item -> new OrderItem(item.getCode(), item.getName(), item.getPrice() , item.getQuantity()))
+                .map(item -> new OrderItem(item.getCode(), item.getName(), item.getPrice(), item.getQuantity()))
                 .collect(Collectors.toSet());
         return OrderDTO.builder()
                 .orderNumber(order.getOrderNumber())
@@ -51,10 +51,10 @@ class OrderMapper {
                 .createdAt(order.getCreatedAt())
                 .build();
     }
-//
-//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-//    public BigDecimal getTotalAmount() {
-//        return items.stream() Stream<Orderltem>
-//.map(item -> item.price().multiply(BigDecimal. value0f(item.quantity()))
-//                .reduce (BigDecimal.ZERO, BigDecimal :: add);
+    //
+    //    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    //    public BigDecimal getTotalAmount() {
+    //        return items.stream() Stream<Orderltem>
+    // .map(item -> item.price().multiply(BigDecimal. value0f(item.quantity()))
+    //                .reduce (BigDecimal.ZERO, BigDecimal :: add);
 }

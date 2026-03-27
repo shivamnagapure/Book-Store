@@ -1,10 +1,9 @@
 package com.shiv.bookstore.orders.domain;
 
 import com.shiv.bookstore.orders.domain.models.OrderStatus;
+import com.shiv.bookstore.orders.domain.models.OrderSummary;
 import java.util.List;
 import java.util.Optional;
-
-import com.shiv.bookstore.orders.domain.models.OrderSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,15 +21,17 @@ public interface OrderRepository
         this.save(order);
     }
 
-    @Query("""
+    @Query(
+            """
         select new com.shiv.bookstore.orders.domain.models.OrderSummary(o.orderNumber , o.status)
             from OrderEntity o
                 where o.userName = :userName
     """)
     List<OrderSummary> findByUserName(String userName);
 
-    //Solve N + 1 Query Problems
-    @Query("""
+    // Solve N + 1 Query Problems
+    @Query(
+            """
         select distinct o
             from OrderEntity o
                 left join fetch o.items

@@ -1,11 +1,8 @@
 package com.shiv.bookstore.orders.domain.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.Set;
+import lombok.Builder;
 
 @Builder
 public record OrderDTO(
@@ -13,7 +10,7 @@ public record OrderDTO(
         String user,
         Set<OrderItem> items,
         Customer customer,
-        Address deliveryAddress ,
+        Address deliveryAddress,
         OrderStatus status,
         String comments,
         LocalDateTime createdAt) {}
