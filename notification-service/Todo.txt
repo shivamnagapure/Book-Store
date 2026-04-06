@@ -1,0 +1,3 @@
+//Todo 1 : We are using outbox pattern , so one event might be sent multiple times , to avoid duplicate event processing in notification service
+  we use idempotency concept , here we are creating one table and each event based on unique id only processed one time ony
+

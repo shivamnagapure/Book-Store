@@ -10,7 +10,6 @@ services:
       #catalog-db:5432/postgres container name and container port
       - DB_USERNAME=postgres
       - DB_PASSWORD=Shivam@123
-
     #If we make request on localhost:8081, it delegates to container port 8081
     ports:
       - "8081:8081"
@@ -50,3 +49,33 @@ services:
       resources:
           limits:
             memory: 700m
+
+
+  notification-service:
+    image: shivamnagapure/bookstore-notification-service
+    container_name: notification-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_URL=jdbc:postgresql://notifications-db:5432/postgres
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=Shivam@123
+      - RABBITMQ_HOST=bookstore-rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - MAIL_HOST=mailhog
+      - MAIL_PORT=1025
+    ports:
+      - "8083:8083"
+    restart: unless-stopped
+    depends_on:
+      notifications-db:
+        condition: service_healthy
+      bookstore-rabbitmq:
+        condition: service_healthy
+      mailhog:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          memory: 700m

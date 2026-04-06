@@ -56,7 +56,7 @@ public class OrderEventService {
         // convert event data to OrderEventEntity
         OrderEventEntity orderEvent = OrderEventEntity.builder()
                 .eventId(event.eventId())
-                .eventType(OrderEventType.ORDER_DELIVERED)
+                .eventType(OrderEventType.ORDER_CANCELLED)
                 .orderNumber(event.orderNumber())
                 .createdAt(event.createdAt())
                 .payload(toJsonPayload(event))
@@ -69,7 +69,7 @@ public class OrderEventService {
         // convert event data to OrderEventEntity
         OrderEventEntity orderEvent = OrderEventEntity.builder()
                 .eventId(event.eventId())
-                .eventType(OrderEventType.ORDER_DELIVERED)
+                .eventType(OrderEventType.ORDER_PROCESSING_FAILED)
                 .orderNumber(event.orderNumber())
                 .createdAt(event.createdAt())
                 .payload(toJsonPayload(event))
