@@ -32,12 +32,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Docker Image
-        if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v5
-        with:
-          context: ./notification-service
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bookstore-notification-service:latest
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Build Docker Image
+        run: mvn -pl notification-service spring-boot:build-image -Dmaven.test.skip=true
+
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Push Docker Image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/bookstore-notification-service
 
 
