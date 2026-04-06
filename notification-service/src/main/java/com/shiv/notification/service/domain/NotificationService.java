@@ -24,7 +24,7 @@ public class NotificationService {
         this.emailSender = emailSender;
         this.properties = properties;
     }
-
+// use external providees to mail send mail with mailSender
     public void sendOrderCreatedNotification(OrderCreatedEvent event) {
         String message =
                 """
