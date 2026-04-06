@@ -34,10 +34,11 @@ jobs:
 
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Build Docker Image
-        run: mvn -pl notification-service spring-boot:build-image -Dmaven.test.skip=true
+        run: mvn -pl notification-service spring-boot:build-image \
+          -Dspring-boot.build-image.imageName=${{ secrets.DOCKERHUB_USERNAME }}/bookstore-notification-service:latest
 
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Push Docker Image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/bookstore-notification-service
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/bookstore-notification-service:latest
 
 
