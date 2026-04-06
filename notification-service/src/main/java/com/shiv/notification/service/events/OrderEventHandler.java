@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderEventHandler {
     private static final Logger log = LoggerFactory.getLogger(OrderEventHandler.class);
-    private final NotificationService notificationService ;
-    private final OrderEventRepository orderEventRepository ;
+    private final NotificationService notificationService;
+    private final OrderEventRepository orderEventRepository;
 
     public OrderEventHandler(NotificationService notificationService, OrderEventRepository orderEventRepository) {
         this.notificationService = notificationService;
@@ -21,46 +21,44 @@ public class OrderEventHandler {
     }
 
     @RabbitListener(queues = "${notifications.new-orders-queue}")
-    void handelOrderCreatedEvent(OrderCreatedEvent event){
+    void handelOrderCreatedEvent(OrderCreatedEvent event) {
         log.info("Order Created Event: {}", event);
-        if(orderEventRepository.existsByEventId(event.eventId())){
+        if (orderEventRepository.existsByEventId(event.eventId())) {
             log.warn("Received duplicate OrderCreatedEvent with eventId: {}", event.eventId());
-            return ;
+            return;
         }
         notificationService.sendOrderCreatedNotification(event);
         OrderEventEntity orderEvent = new OrderEventEntity(event.eventId());
-        orderEventRepository.save(orderEvent) ;
+        orderEventRepository.save(orderEvent);
     }
 
     @RabbitListener(queues = "${notifications.delivered-orders-queue}")
-    void handelOrderDeliveredEvent(OrderDeliveredEvent event){
+    void handelOrderDeliveredEvent(OrderDeliveredEvent event) {
         System.out.println("Order Created Event: " + event);
-        if(orderEventRepository.existsByEventId(event.eventId())){
+        if (orderEventRepository.existsByEventId(event.eventId())) {
             log.warn("Received duplicate OrderCreatedEvent with eventId: {}", event.eventId());
-            return ;
+            return;
         }
         notificationService.sendOrderDeliveredNotification(event);
         OrderEventEntity orderEvent = new OrderEventEntity(event.eventId());
-        orderEventRepository.save(orderEvent) ;
+        orderEventRepository.save(orderEvent);
     }
 
     @RabbitListener(queues = "${notifications.cancelled-orders-queue}")
-    void handelOrderDeliveredEvent(OrderCancelledEvent event){
+    void handelOrderDeliveredEvent(OrderCancelledEvent event) {
         System.out.println("Order Created Event: " + event);
-        if(orderEventRepository.existsByEventId(event.eventId())){
+        if (orderEventRepository.existsByEventId(event.eventId())) {
             log.warn("Received duplicate OrderCreatedEvent with eventId: {}", event.eventId());
-            return ;
+            return;
         }
         notificationService.sendOrderCancelledNotification(event);
         OrderEventEntity orderEvent = new OrderEventEntity(event.eventId());
-        orderEventRepository.save(orderEvent) ;
+        orderEventRepository.save(orderEvent);
     }
 
     @RabbitListener(queues = "${notifications.error-orders-queue}")
-    void handelOrderDeliveredEvent(OrderErrorEvent event){
+    void handelOrderDeliveredEvent(OrderErrorEvent event) {
         System.out.println("Order Created Event: " + event);
         notificationService.sendOrderErrorEventNotification(event);
     }
-
-
 }

@@ -15,11 +15,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class NotificationService {
 
-    private static final Logger log = LoggerFactory.getLogger(NotificationService.class) ;
+    private static final Logger log = LoggerFactory.getLogger(NotificationService.class);
 
-    private final JavaMailSender emailSender ;
-    private final ApplicationProperties properties ;
-
+    private final JavaMailSender emailSender;
+    private final ApplicationProperties properties;
 
     public NotificationService(JavaMailSender emailSender, ApplicationProperties properties) {
         this.emailSender = emailSender;
@@ -34,7 +33,7 @@ public class NotificationService {
                         ----------------------------------------------------
                         Dear %s,
                         Your order with orderNumber: %s has been created successfully.
-                        
+
                         Thanks,
                         BookStore Team
                         ===================================================
@@ -100,18 +99,17 @@ public class NotificationService {
         sendEmail(properties.supportEmail(), "Order Processing Failure Notification", message);
     }
 
-
-    private void sendEmail(String recipient, String subject, String content){
-        try{
+    private void sendEmail(String recipient, String subject, String content) {
+        try {
             MimeMessage mimeMessage = emailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage , "utf-8");
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setFrom(properties.supportEmail());
             helper.setTo(recipient);
             helper.setSubject(subject);
             helper.setText(content);
             emailSender.send(mimeMessage);
             log.info("Email sent to: {}", recipient);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Error while sending email", e);
         }
     }

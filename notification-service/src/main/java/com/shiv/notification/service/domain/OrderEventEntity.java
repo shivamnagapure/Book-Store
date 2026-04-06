@@ -1,12 +1,10 @@
 package com.shiv.notification.service.domain;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -29,7 +27,6 @@ public class OrderEventEntity {
     private LocalDateTime updatedAt;
 
     public OrderEventEntity(String eventId) {
-        this.eventId = eventId ;
+        this.eventId = eventId;
     }
-
 }
