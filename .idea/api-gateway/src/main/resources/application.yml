@@ -1,0 +1,63 @@
+server:
+  port: 8989
+  shutdown: graceful
+
+#controls which actuator endpoints are accessible over HTTP
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # All endpoints
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          #Gateway will automatically create routes for your services, Based on service discovery (like Eureka)
+          discovery:
+            locator:
+              enabled: true
+
+          globalcors:
+            cors-configurations:
+              '[/**]':  #Apply this CORS rule to all routes/endpoints
+                allowed-origins: "*"  #Allow requests from any frontend (any domain)
+                allowed-methods: "*"  #Allow all HTTP methods
+                allowed-headers: "*"
+                allow-credentials: false #Do NOT allow credentials like: Cookies , Authorization session
+          routes:
+            - id: catalog-service
+              uri: ${CATALOG_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/catalog/**
+              filters:
+                - RewritePath=/catalog/?( ?< segment> .* ), /${segment}
+            - id: orders-service
+              uri: ${ORDER_SERVICE_URL:http://localhost:8082}
+              predicates:
+                - Path=/orders/ **
+              filters:
+                - RewritePath=/orders/?( ?< segment> .* ), /${segment}
+            - id: openapi
+              uri: http://localhost:${server.port}
+              predicates:
+                - Path=/v3/api-docs/**
+              filters:
+                - RewritePath=/v3/api-docs/?( ?< segment> .* ), /${segment}/v3/api-docs
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+# use to show multiple microservices APIs in one UI , but it static ->
+#  means , if we have  to add another route , then we have to add uri manually here , instead we can do it dynamically
+    urls:
+      - name: catalog
+        url: /v3/api-docs/catalog
+      - name: orders
+        url: /v3/api-docs/orders
+
+
+
