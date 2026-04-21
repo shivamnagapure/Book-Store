@@ -16,6 +16,7 @@
 		<java.version>21</java.version>
 		<spring-cloud.version>2024.0.1</spring-cloud.version>  <!-- Compatible with Boot 3.4.x -->
 		<springdoc-openapi.version>2.5.0</springdoc-openapi.version>  <!-- Updated for Boot 3.x -->
+		<dockerImageName>shivamnagapure/bookstore-${project.artifactId}</dockerImageName>
 	</properties>
 
 	<dependencies>
@@ -65,6 +66,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<name>${dockerImageName}</name>
+						<!-- By default, it builds image for ARM architecture(Window , Linux) for Mac need to use builder-->
+					</image>
+				</configuration>
 			</plugin>
 
 			<plugin>
