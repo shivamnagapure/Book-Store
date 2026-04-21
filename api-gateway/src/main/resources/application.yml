@@ -1,6 +1,6 @@
 server:
   port: 8989
-
+# this api gateway only delegates the requests to down stream services , we are not configuring rate limiting and other things .
 spring:
   application:
     name: api-gateway
@@ -34,6 +34,7 @@ management:
       exposure:
         include: "*"
 
+# we can configure it dynamically
 springdoc:
   swagger-ui:
     use-root-path: true
