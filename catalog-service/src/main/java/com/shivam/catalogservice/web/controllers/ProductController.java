@@ -27,6 +27,6 @@ class ProductController {
         return productService
                 .getProductByCode(code)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ProductNotFoundException("Product Not Found With " + code)) ;
+                .orElseThrow(() -> new ProductNotFoundException("Product Not Found With " + code));
     }
 }
